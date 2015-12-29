@@ -13,7 +13,7 @@ class Unicorn::HttpServer
       if signal == :KILL
         begin
           pid = fork do
-            path = "/tmp/turmeric-timeout-#{Process.pid}.log"
+            path = "/tmp/unicorn-timeout-backtrace-#{Process.pid}.log"
             log_file = File.open(path, "a")
             IO.popen("#{gdbruby_bin} #{wpid}", "r+") do |io|
               while line = io.gets
