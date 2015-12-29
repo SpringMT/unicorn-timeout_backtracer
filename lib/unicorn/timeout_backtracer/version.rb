@@ -1,5 +1,5 @@
 module Unicorn
   module TimeoutBacktracer
-    VERSION = "0.0.1"
+    VERSION = "0.0.2"
   end
 end
