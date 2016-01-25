@@ -9,11 +9,11 @@ class Unicorn::HttpServer
   def kill_worker(signal, wpid)
     bin_dir = Gem::Installer.new('gdbruby').bin_dir
     gdbruby_bin = "#{bin_dir}/gdbruby.rb"
-    if ENV['ENABLE_TIMEOUT_LOG'].to_i.nonzero? && FileTest.executable?(gdbruby_bin)
+    path = ENV['UNICORN_TIMEOUT_LOG_PATH'] || "/tmp/unicorn-timeout-backtrace-#{Process.pid}.log"
+    if ENV['ENABLE_UNICORN_TIMEOUT_LOG'].to_i.nonzero? && FileTest.executable?(gdbruby_bin)
       if signal == :KILL
         begin
           pid = fork do
-            path = "/tmp/unicorn-timeout-backtrace-#{Process.pid}.log"
             log_file = File.open(path, "a")
             IO.popen("#{gdbruby_bin} #{wpid}", "r+") do |io|
               while line = io.gets
